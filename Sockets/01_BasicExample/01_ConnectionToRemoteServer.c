@@ -3,6 +3,7 @@
 #include<sys/socket.h> //Library required for sockets
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h> //Required for closing the socket_desc
+#include<stdlib.h> //For system commands
 
 int main(int argc, char **argv) {
 
@@ -10,6 +11,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in server;
     char *message; //For sending a message
     char server_reply[2000]; //For receiving a reply
+    FILE *fp;
 
     /*
     ###########################################################################
@@ -105,6 +107,10 @@ int main(int argc, char **argv) {
     }
     puts("Message bekommt...");
     puts(server_reply);
+
+    fp = fopen("test.html", "w");
+    fprintf(fp, "%s", server_reply);
+    fclose(fp);
 
     /*
     ###########################################################################
