@@ -1,0 +1,50 @@
+
+TREE
+    Every tree is a data structure (which we use to store information in a specific way) which has a root node and then, it could have one child or many children. In the same way, each of these children can have one or more children.
+
+    HEIGHT (of a tree)
+        - would be the height of its root node    
+    WIDTH or DIAMETER
+        - is the number of nodes on the longest path between any two leaf nodes
+
+NODE 
+    Represents each of the elements where the info is stored in the tree.
+
+    DEPTH (of a node)
+        - Is the number of edges from the node to the tree's root node.
+        - A root node will have a depth of 0
+    HEIGHT (of a tree)
+        - Is the number of edges on the longest path from the node to a leaf.
+        - A leaf node will have a height of 0
+        
+LEAF NODE
+    It's a node which does not have any children (root node alone is not a leaf node, it IS just the root node)
+
+BINARY TREE
+    It's a tree which each of its nodes have at most two children per level.
+    Normally, left chilf has in its value field, a lower value than the parent. On the other hand, right child has in its value field, a greater value than the parent.
+
+PROPERTIES OF THE TREES
+    BALANCED VS UNBALANCED
+        It's essential to clarify that balancing a tree does not mean that left and right subtrees are exactly the same size. Other way to consider balance trees is: "not terribly imbalanced", i.e. it IS enough to ensure O(log n) times for insert and find.
+
+    TYPES OF BINARY TREES
+        COMPLETE BINARY TREES
+            It's a tree in which EVERY LEVEL of the tree IS fully filled, except for perhaps the last level. Last level is filled from left to right.
+
+        FULL BINARY TREES
+            It's a tree in which every node has either zero or two children. i.e. no nodes has only one child
+
+        PERFECT BINARY TREES
+            It's a tree that is both full and complete. (All leaf nodes will be at the same level and this level has the maximum number of nodes).
+
+            A perfect tree must have exactly pow(2,k)-1 nodes (where k is the number of levels)
+
+    BINARY TREE TRAVERSAL
+        There are three types of travesing a tree. These are "In-Order Traversal", "Pre-Order Traversal" and "Post-Order Traversal".
+
+        IN-ORDER TRAVERSAL
+
+        PRE-ORDER TRAVERSAL
+
+        POST-ORDER TRAVERSAL
