@@ -17,6 +17,7 @@ NodeBinaryHeap *insertNodeIntoBinaryHeap(NodeBinaryHeap *lastInsertedElement, in
 NodeBinaryHeap *findSuccessorOf(NodeBinaryHeap *currentNode);
 NodeBinaryHeap *findSuccessorPerLevelsOf(NodeBinaryHeap *currentElement, int level, int movement, NodeBinaryHeap *lastElement);
 void printInOrderBinaryHeap(NodeBinaryHeap *rootBinaryHeap);
+void printInOrderBinaryHeapPretty(NodeBinaryHeap *rootBinaryHeap);
 void fulfillHeapProperty(NodeBinaryHeap *lastInsertedElement);
 
 #endif //BINARY_HEAP_H

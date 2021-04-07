@@ -36,6 +36,9 @@ NodeBinaryHeap *insertNodeIntoBinaryHeap(NodeBinaryHeap *lastInsertedElement, in
     //There are at least one node in the heap, then... find "last inserted element's successor"
     NodeBinaryHeap *successor = findSuccessorOf(lastInsertedElement);
     successor->value = value;
+
+    fulfillHeapProperty(successor);
+
     return successor;
 }
 
@@ -48,21 +51,7 @@ NodeBinaryHeap *findSuccessorOf(NodeBinaryHeap *currentElement) {
             child->parent = currentElement;
             currentElement->leftChild = child;
             return child;
-        } /*else if (currentElement->rightChild == NULL) {
-            NodeBinaryHeap *child = createNewNodeBinaryHeap();
-
-            child->level = currentElement->level+1;
-            child->parent = currentElement;
-            child->leftChild = NULL;
-            child->rightChild = NULL;
-            child->value = -1;
-
-            currentElement->rightChild = child;
-
-            return child;
-        } else {
-            printf("WARNING - I am in a section of code which apparently I should not be!\n");
-        }*/
+        }
     } 
     //Current node IS NOT root node
     if ( currentElement == (currentElement->parent)->leftChild && (currentElement->parent)->rightChild == NULL ) { 
@@ -72,7 +61,7 @@ NodeBinaryHeap *findSuccessorOf(NodeBinaryHeap *currentElement) {
         currentElement->parent->rightChild = successor;
         return successor;
     } else if ( currentElement == (currentElement->parent)->rightChild ) {
-        printf("Last element is right child\n");
+        //printf("Last element is right child\n");
         return findSuccessorPerLevelsOf(currentElement, currentElement->level, GoingUp, currentElement);
     }
 }
@@ -82,13 +71,12 @@ NodeBinaryHeap *findSuccessorPerLevelsOf(NodeBinaryHeap *currentElement, int lev
     {
         case GoingUp:
             if( currentElement->parent == NULL ) { //This is root node
-                printf("Llegue al root node\n");
                 if( lastElement == currentElement->rightChild ) {
-                    return findSuccessorPerLevelsOf(currentElement->leftChild, level, GoingDown, currentElement);
+                    return findSuccessorPerLevelsOf(currentElement->leftChild, level+1, GoingDown, currentElement);
                 }
-            } else if( currentElement == currentElement->parent->leftChild ) { //Current element is LEFT son
+            } else if( currentElement == currentElement->parent->leftChild ) { //Current element is LEFT child
                 return findSuccessorPerLevelsOf(currentElement->parent, level, GoingDown, currentElement);
-            } else if( currentElement == currentElement->parent->rightChild ) { //Current element is RIGHT son
+            } else if( currentElement == currentElement->parent->rightChild ) { //Current element is RIGHT child
                 return findSuccessorPerLevelsOf(currentElement->parent, level, GoingUp, currentElement);
             }
 
@@ -129,7 +117,16 @@ NodeBinaryHeap *findSuccessorPerLevelsOf(NodeBinaryHeap *currentElement, int lev
 }
 
 void fulfillHeapProperty(NodeBinaryHeap *lastInsertedElement) {
-    
+    if( lastInsertedElement->parent != NULL ) {
+        /* This is not the root node and hence, we must evaluate whether we have to move upwards the value */
+        if( lastInsertedElement->value < lastInsertedElement->parent->value ) {
+            int aux = lastInsertedElement->value;
+            lastInsertedElement->value = lastInsertedElement->parent->value;
+            lastInsertedElement->parent->value = aux;
+
+            fulfillHeapProperty(lastInsertedElement->parent);
+        }
+    }
 }
 
 void printInOrderBinaryHeap(NodeBinaryHeap *rootBinaryHeap) {
@@ -137,6 +134,21 @@ void printInOrderBinaryHeap(NodeBinaryHeap *rootBinaryHeap) {
         printf("%i[%i] ", rootBinaryHeap->value, rootBinaryHeap->level);
         printInOrderBinaryHeap(rootBinaryHeap->leftChild);
         printInOrderBinaryHeap(rootBinaryHeap->rightChild);
+
+        if(rootBinaryHeap->level == 0) printf("\n\n");
+    }
+}
+
+void printInOrderBinaryHeapPretty(NodeBinaryHeap *rootBinaryHeap) {
+    if( rootBinaryHeap != NULL ) {
+        int i;
+        int level = rootBinaryHeap->level;
+        for(i=0; i < level; i++) 
+            printf("\t");
+        printf("%i[%i]\n", rootBinaryHeap->value, rootBinaryHeap->level);
+
+        printInOrderBinaryHeapPretty(rootBinaryHeap->leftChild);
+        printInOrderBinaryHeapPretty(rootBinaryHeap->rightChild);
 
         if(rootBinaryHeap->level == 0) printf("\n\n");
     }
